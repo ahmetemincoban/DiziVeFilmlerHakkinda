@@ -1,0 +1,28 @@
+@model DiziveFilmHakkinda.Models.KategoriModeli
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="row mt-5">
+    <div class="col-4"></div>
+    <div class="col-4 mt-5">
+        <div class="card text-light bg-dark mb-3" style="max-width: 25rem;">
+      <div class="card-header border-dark text-danger"><b><u>Dikkat!!!</u></b> Şuanda @Model.Adi kategorisini silmek üzeresiniz</div>
+      <div class="card-body">
+        <h5 class="card-title">@Model.Adi</h5> <h6>Kategorisini silmek istediğinize eminseniz "Kategoriyi Sil" butonuna tıklayınız.</h6>
+      </div>
+        <div class="card-footer text-center bg-transparent border-dark">
+                
+            <form asp-action="Delete">
+                <input type="hidden" asp-for="Id" />
+                <input type="submit" value="Kategoriyi Sil" class="btn btn-light mx-2" />
+                <a class="btn btn-success" asp-action="Index">Anasayfaya Dön</a>
+            </form>
+        </div>
+    </div>
+    </div>
+    <div class="col-4"></div>
+</div>
+
+</div>

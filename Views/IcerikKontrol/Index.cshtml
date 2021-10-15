@@ -1,0 +1,152 @@
+@model IEnumerable<IcerikModeli>
+<style>
+    p,a,small{font-family:Titillium Web; }
+    #baslik2{
+        font-size: 12px;
+        font-weight: bold;
+        white-space: nowrap;
+        overflow:hidden;
+    }
+
+    @@media(max-width: 768px){
+        .carousel-inner .carousel-item > div {
+            display: none;
+        }
+        .carousel-inner .carousel-item > div:first-child {
+            display: block;
+        }
+    }
+    .carousel-inner .carousel-item.active,
+    .carousel-inner .carousel-item-next,
+    .carousel-inner .carousel-item-prev{
+        display: flex;
+    }
+    @@media(min-width: 768px){
+        .carousel-inner .carousel-item-right.active,
+        .carousel-inner .carousel-item-next{
+            transform: translateX(33.333%);
+        }
+        .carousel-inner .carousel-item-left.active,
+        .carousel-inner .carousel-item-prev{
+            transform: translateX(-33.333%);
+        }
+    }
+    .carousel-inner .carousel-item-right,
+    .carousel-inner .carousel-item-left{
+        transform: translateX(0);
+    }
+</style>
+ @if (User.IsInRole("Admin")||User.IsInRole("Moderator")){
+<div id="buton">
+    <a asp-action="Create" class="btn btn-primary" asp-route-id="@ViewBag.kategoriId">İçerik Ekle <i class="fas fa-plus fa-spin"></i></a>
+</div>}
+<div style="width: auto; height: 42px; background-image: url(/Images/onecikartilanlar.png); background-repeat: no-repeat; background-size: contain;">
+
+</div>
+<div class="container">
+    <div class="row mx-auto my-auto">
+        <div id="recipeCarousel" class="carousel slide w-100" data-ride="carousel">
+            <div class="carousel-inner w-100" role="listbox">
+                @{int sayac=0;}
+                @foreach (var item in Model)
+                {
+                    if (item.IcerikOneCikartmaDurumu==true)
+                    {
+                        if (sayac==0)
+                        {
+                            <div class="carousel-item active" style="justify-content: center;">
+                                <div class="card mb-4 border-secondary oneCikanKart">
+                                    <img class="card-image-top img-fluid" id="oneCikartilanResim" src="/Images/@item.Gorseller.FirstOrDefault().DosyaAdi" alt="@item.Baslik içeriğinin afişi">
+                                    <div class="card-body" style="text-align: center;">
+                                        <a asp-action="Details" asp-route-id="@item.ID" class="card-title" id="baslik2">@Html.DisplayFor(modelItem=>item.Baslik)</a asp-action="@item">
+                                    </div>
+                                </div>
+                            </div>
+                            sayac++;
+                        }
+                        else
+                        {
+                            <div class="carousel-item" style="justify-content: center;">
+                                <div class="card mb-4 border-secondary oneCikanKart">
+                                    <img class="card-image-top img-fluid" id="oneCikartilanResim" src="/Images/@item.Gorseller.FirstOrDefault().DosyaAdi" alt="@item.Baslik içeriğinin afişi">
+                                    <div class="card-body" style="text-align: center;">
+                                        <a asp-action="Details" asp-route-id="@item.ID" class="card-title" id="baslik2">@Html.DisplayFor(modelItem=>item.Baslik)</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                }
+            </div>
+            <a href="#recipeCarousel" class="carousel-control-prev w-auto" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+                <span class="sr-only">Önceki</span>
+            </a>
+            <a href="#recipeCarousel" class="carousel-control-next w-auto" role="button" data-slide="next">
+                <span class="carousel-control-next-icon bg-dark border border-dark rounded-circle" aria-hidden="true"></span>
+                <span class="sr-only">Sonraki</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-3">
+    @if(ViewBag.KategoriBilgi!=null)
+    {
+        <h3 class="text-light">@ViewBag.KategoriBilgi</h3>
+    }
+<div class="card-deck" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); grid-gap: .5rem;">
+    @foreach (var item in Model.Reverse())
+    {
+        if (item.IcerikYayinlanmaDurumu==true)
+        {
+            <div class="card mb-4 border-secondary">
+            <img class="card-img-top img-fluid" id="resim" src="/Images/@item.Gorseller.FirstOrDefault().DosyaAdi" alt="@item.Baslik içeriğinin afişi">
+            <div class="card-body">
+                <p id="baslik" class="card-title">@Html.DisplayFor(modelItem=>item.Baslik)</p>
+                <p class="card-text" style="width: 199.5px; height: 144px;">@item.Aciklama.ToString().Substring(0,120) <a asp-action="Details" asp-route-id="@item.ID"><small>...devamını oku</small></a></p>
+                <p class="card-footer">
+                    <small class="text-muted">
+                        <i class="fab fa-imdb"></i> @item.IMDB || <i class="fas fa-quote-right"></i> @item.Tur<br>
+                        <a style="width: -webkit-fill-available;" class="btn btn-success btn-sm my-2" asp-action="Details" asp-route-id="@item.ID">Detaylar <i class="fas fa-info-circle"></i></a><br>
+                         @if (User.IsInRole("Admin")||User.IsInRole("Moderator")){
+                        <a style="width: -webkit-fill-available;" class="btn btn-warning btn-sm " asp-action="Edit" asp-route-id="@item.ID">Düzenle <i class="far fa-edit"></i></a><br>
+                        <a style="width: -webkit-fill-available;" class="btn btn-danger btn-sm my-2" asp-action="Delete" asp-route-id="@item.ID">İçeriği Sil <i class="fas fa-trash"></i></a><br>
+                         }
+                        @* <a style="width: -webkit-fill-available; background: #494ca2; border-radius: #494ca2; color: #ffffff;" class="btn btn-sm btn-primary" asp-action="KategoriDuzenle" asp-route-id="@item.ID">İçeriğin Kategorileri <i class="fas fa-list-alt"></i></a><br> *@
+                        <div>
+                            <p style="float: right;">@item.EklenmeTarihi.ToString("d/M/yyyy")</p>
+                        </div>
+                    </small>
+                </p>
+            </div>
+            </div>
+        }
+    }
+</div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $('#recipeCarousel').carousel({
+            interval:5000
+        })
+        $('.carousel .carousel-item').each(function(){
+            var minPerSlide=3;
+            var next = $(this).next();
+            if(!next.length){
+                next=$(this).siblings(':first');
+            }
+            next.children(':first-child').clone().appendTo($(this));
+
+            for(var i=0;i<minPerSlide;i++){
+                next=next.next();
+                if(!next.length){
+                    next=$(this).siblings(':first');
+                }
+                next.children(':first-child').clone().appendTo($(this));
+            }
+        });
+    </script>
+}

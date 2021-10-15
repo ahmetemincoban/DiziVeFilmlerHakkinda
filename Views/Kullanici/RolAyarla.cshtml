@@ -1,0 +1,69 @@
+@model List<string>
+@using Microsoft.AspNetCore.Identity
+@inject RoleManager<AppRole> RoleManager
+@{
+    string kullaniciadi=ViewBag.KullaniciAdi;
+    string []kuladi=kullaniciadi.Split('@');
+}
+@{var seciliYetkiler=Model;}
+
+<div class="row mt-5">
+    <div class="col-4"></div>
+    <div class="col-4 mt-5">
+        <div class="card text-light bg-dark mb-3" style="max-width: 22rem;">
+    <h4 class="text-warning text-center">"@kuladi[0]" Kullanıcısının Yetkileri</h4>
+    <form asp-action="RolAyarla">
+            <div class="card-body border-light">
+                <h5 class="card-title">Buradan <b>"@kuladi[0]"</b> kişisi için yetkileri ayarlayabilirsiniz.</h5>
+                <p class="card-text">
+                    <div class="custom-control custom-checkbox text-light mb-3">
+                                <input class="custom-control-input" type="checkbox" id="select_all">
+                                <label class="custom-control-label" for="select_all">Tümünü Seç</label>
+                            </div> 
+                    @foreach (var item in RoleManager.Roles)
+                        {
+                            var secili = Model.Contains(item.Name) ? "checked" : "";
+                    
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input checkbox" id="cb_@item.Id" @secili name="Rolleri" value="@item.Name">
+                                <label class="custom-control-label" for="cb_@item.Id">@item.Name</label>
+                            </div>
+                        }  
+                </p>
+            </div>
+                <div class="card-footer bg-transparent border-light">
+                    <button style="width: -webkit-fill-available;" type="submit" class="btn btn-primary">Kaydet</button>
+                    <a asp-action="Index" style="width: -webkit-fill-available;" class="btn btn-light mt-3">Kullanıcılar Listesine Dön</a>
+                </div>
+        </form>
+</div>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+$(document).ready(function(){
+    $('#select_all').on('click',function(){
+        if(this.checked){
+            $('.checkbox').each(function(){
+                this.checked = true;
+            });
+        }else{
+             $('.checkbox').each(function(){
+                this.checked = false;
+            });
+        }
+    });
+    
+    $('.checkbox').on('click',function(){
+        if($('.checkbox:checked').length == $('.checkbox').length){
+            $('#select_all').prop('checked',true);
+        }else{
+            $('#select_all').prop('checked',false);
+        }
+    });
+});
+</script>
+}

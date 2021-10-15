@@ -1,0 +1,33 @@
+@model DiziveFilmHakkinda.Models.KategoriModeli
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 mt-5">
+        <div class="card text-white bg-dark mb-3" style="max-width: 28rem;">
+  <div style="text-align: center; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" class="card-header"><h1>Kategori Ekle</h1></div>
+  <div class="card-body">
+    <h5 class="card-title text-center">Lütfen Kategori Bilgilerini Giriniz</h5>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Adi" class="control-label">Kategori Adı</label>
+                <input asp-for="Adi" class="form-control" />
+                <span asp-validation-for="Adi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input style="width: calc(50%);" type="submit" value="Oluştur" class="btn btn-primary" />
+                <a class="btn btn-outline-success ml-1" asp-action="Index">Anasayfaya Dön</a>
+            </div>
+        </form>
+    </div>
+    <div class="col-4"></div>
+</div>
+</div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

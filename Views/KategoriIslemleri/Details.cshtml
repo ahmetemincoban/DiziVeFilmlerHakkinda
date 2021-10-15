@@ -1,0 +1,24 @@
+@model DiziveFilmHakkinda.Models.KategoriModeli
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row mt-5">
+    <div class="col-4"></div>
+    <div class="col-4 mt-5">
+        <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+      <div class="card-header border-dark"><b>Kategori Detayları</b></div>
+      <div class="card-body">
+        <h5 class="card-title">@Model.Adi Kategorisi</h5>
+        <p class="card-text">@Model.Adi kategorisindeki içerikleri barındırmak amaçlı eklenmiştir.</p>
+      </div>
+        <div class="card-footer bg-transparent border-dark">
+            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Id">Düzenle</a> |
+            <a class="btn btn-dark" asp-action="Index">Anasayfaya Dön</a>
+        </div>
+    </div>
+    </div>
+    <div class="col-4"></div>
+</div>
+

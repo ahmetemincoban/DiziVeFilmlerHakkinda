@@ -1,0 +1,13 @@
+﻿@page
+@model AccessDeniedModel
+@{
+    ViewData["Title"] = "Access denied";
+}
+
+ <div style="margin-top: calc(23%);">
+        <blockquote class="blockquote text-center text-light">
+            <p class="mb-0 text-danger font-weight-bolder">Buraya erişmek için gerekli yetkiye sahip değilsiniz.</p>
+            <footer class="blockquote-footer text-danger font-weight-bolder">Bir hata olduğunu düşünüyorsanız <cite title="Source Title">sistem yöneticinize </cite>başvurunuz.</footer>
+            <footer class="blockquote mt-1"><a class="btn btn-dark" asp-controller="IcerikKontrol" asp-action="Index">Anasayfaya Dön</a></footer>
+        </blockquote>
+    </div>

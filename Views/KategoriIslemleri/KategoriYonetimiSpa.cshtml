@@ -1,0 +1,43 @@
+<div class="text-light" id="app">
+<input style="width: 350px;" type="text" v-model="yeniKategori" placeholder="Eklemek İstediğiniz Kategorinin Adını Giriniz">
+<button class="btn btn-success" v-on:Click="newCat">Ekle</button>
+    <div class="jumbotron mt-3">
+        <h4 class="text-success">Tüm Kategoriler</h4>
+        <table class="table table-dark table-striped">
+            <thead>
+                <th>Kategoriler</th>
+                <th>İşlemler</th>
+            </thead>
+            <tbody class="text-success">
+                <tr v-for="k in kategoriler" :class="{'table-warning':editing==k,'table-danger':catDel==k}">
+                    <td class="w-50">
+                        <input v-if="k == editing" v-model="editing.adi" type="text">
+                            <span v-else>
+                                {{k.adi}}
+                            </span>
+                        </td>
+                    <td>
+                        <div v-if="k == editing">
+                            <span class="text-dark"><i class="fas fa-exclamation-triangle"></i> Emin misiniz?</span>
+                            <button class="btn btn-outline-success ml-3" v-on:Click="editCat(editing)">Onayla</button>
+                            <button class="btn btn-outline-danger" v-on:Click="editing = ''">İptal</button>
+                        </div>
+                        <div v-else-if="k==catDel">
+                            <span class="text-dark"><i class="fas fa-exclamation-triangle"></i> Emin misiniz?</span>
+                            <button class="btn btn-outline-danger ml-3" v-on:Click="delCat(k)">Kalıcı Olarak Sil</button>
+                            <button class="btn btn-outline-dark" v-on:Click="catDel = ''">İptal</button>
+                        </div>
+                        <div v-else>
+                            <button class="btn btn-warning" v-on:Click="editing=k">Kategoriyi Düzenle</button>
+                            <button class="btn btn-danger" v-on:Click="catDel=k">Kategoriyi Sil</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="~/js/kategoriYonetimi.js"></script>
+}

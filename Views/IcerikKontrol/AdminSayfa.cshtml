@@ -1,0 +1,37 @@
+@model IEnumerable<DiziveFilmHakkinda.Models.IcerikModeli>
+@{
+    ViewData["Title"] = "Anasayfa";
+}
+<style>
+    p,a,small{
+        font-family:Titillium Web;
+    }
+</style>
+<div id="buton">
+    <a asp-action="Create" class="btn btn-primary">İçerik Ekle <i class="fas fa-plus fa-spin"></i></a>
+</div>
+<div class="container mt-5">
+<div class="card-deck" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); grid-gap: .5rem;">
+    @foreach (var item in Model.Reverse())
+    {
+            <div class="card mb-4 border-secondary">
+            <img class="card-img-top img-fluid" id="resim" src="/Images/@item.Gorseller.FirstOrDefault().DosyaAdi" alt="@item.Baslik içeriğinin afişi">
+            <div class="card-body">
+                <p id="baslik" class="card-title">@Html.DisplayFor(modelItem=>item.Baslik)</p>
+                <p class="card-text" style="width: 199.5px; height: 144px;">@item.Aciklama.ToString().Substring(0,120) <a asp-action="Details" asp-route-id="@item.ID"><small>...devamını oku</small></a></p>
+                <p class="card-footer">
+                    <small class="text-muted">
+                        <i class="fab fa-imdb"></i> @item.IMDB || <i class="fas fa-quote-right"></i> @item.Tur<br>
+                        <a class="btn btn-success btn-sm my-2" asp-action="Details" asp-route-id="@item.ID">Detaylar <i class="fas fa-info-circle"></i></a><br>
+                        <a class="btn btn-warning btn-sm " asp-action="Edit" asp-route-id="@item.ID">Düzenle <i class="far fa-edit"></i></a><br>
+                        <a class="btn btn-danger btn-sm my-2" asp-action="Delete" asp-route-id="@item.ID">İçeriği Sil <i class="fas fa-trash"></i></a><br>
+                        <div>
+                            <p style="float: right;">@item.EklenmeTarihi.ToString("d/M/yyyy")</p>
+                        </div>
+                    </small>
+                </p>
+            </div>
+            </div>
+    }
+</div>
+</div>

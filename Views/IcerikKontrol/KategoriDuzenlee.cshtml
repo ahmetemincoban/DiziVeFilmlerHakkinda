@@ -1,0 +1,62 @@
+@model IcerikModeli
+@using DiziveFilmHakkinda.Data
+@inject IcerikDb _context 
+
+@{var seciliKategoriler=Model.KategoriIcerikler.Select(x=>x.KategoriId);}
+<div class="row mt-5">
+    <div class="col-4"></div>
+    <div class="col-4 mt-5">
+        <div class="card text-light bg-dark mb-3" style="max-width: 18rem;">
+      <div class="card-header border-light"><small class="text-warning">**İçeriğe ait kategoriler önceden seçilmiştir</small></div>
+        <form asp-action="KategoriDuzenle">
+            <div class="card-body border-light">
+                <h5 class="card-title">Lütfen @Model.Baslik içeriği için kategori seçiniz</h5>
+                <p class="card-text">
+                    <div class="custom-control custom-checkbox text-light mb-3">
+                                <input class="custom-control-input" type="checkbox" id="select_all">
+                                <label class="custom-control-label" for="select_all">Tümünü Seç</label>
+                            </div> 
+                    @foreach (var item in _context.Kategoriler)
+                        {
+                            var secililer=seciliKategoriler.Contains(item.Id) ? "checked" : "";
+                            <div class="custom-control custom-switch text-light">
+                                <input class="custom-control-input checkbox" type="checkbox" id="cb_@item.Id" @secililer name="SeciliKategoriler" value="@item.Id">
+                                <label class="custom-control-label" for="cb_@item.Id">@item.Adi</label>
+                            </div> 
+                        }   
+                </p>
+            </div>
+                <div class="card-footer bg-transparent border-light">
+                    <button style="width: -webkit-fill-available;" type="submit" id="alertKapatmaliBtn" class="btn btn-primary">Kaydet</button>
+                </div>
+        </form>
+    </div>
+    </div>
+    <div class="col-4"></div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+$(document).ready(function(){
+    $('#select_all').on('click',function(){
+        if(this.checked){
+            $('.checkbox').each(function(){
+                this.checked = true;
+            });
+        }else{
+             $('.checkbox').each(function(){
+                this.checked = false;
+            });
+        }
+    });
+    
+    $('.checkbox').on('click',function(){
+        if($('.checkbox:checked').length == $('.checkbox').length){
+            $('#select_all').prop('checked',true);
+        }else{
+            $('#select_all').prop('checked',false);
+        }
+    });
+});
+</script>
+}

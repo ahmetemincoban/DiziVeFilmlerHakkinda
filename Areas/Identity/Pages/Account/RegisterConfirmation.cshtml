@@ -1,0 +1,25 @@
+@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Register confirmation";
+}
+
+<h1>@ViewData["Title"]</h1>
+@{
+    if (@Model.DisplayConfirmAccountLink)
+    {
+        <p>Bu projede henüz bir eposta gönderici servis bulunmamaktadır.</p>
+        <p>Bu sebeple lütfen <a id="confirm-link" href="@Model.EmailConfirmationUrl">buraya</a> tıklayarak mail adresinizi onaylayınız.</p>
+    }
+    else
+    {
+        <div style="margin-top: calc(23%);">
+            <blockquote class="blockquote text-center text-light">
+                <p class="mb-0">Lütfen mail adresinizi doğrulamak için size gönderdiğimiz epostaya gidiniz.</p>
+                <footer class="blockquote-footer">Sıradan bir <cite title="Source Title">Ahmet Emin ST & Aybüke Arslan </cite>Yapıtı</footer>
+                <footer class="blockquote mt-1"><a class="btn btn-dark" asp-controller="IcerikKontrol" asp-action="Index">Anasayfaya Dön</a></footer>
+            </blockquote>
+        </div>    
+    }
+    
+}

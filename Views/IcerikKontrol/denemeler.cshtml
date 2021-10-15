@@ -1,0 +1,106 @@
+@model DiziveFilmHakkinda.Models.IcerikModeli
+<div style="background-image: url(/Images/icerikekle2.png); background-size: contain; background-repeat: no-repeat;">
+    <div class="row text-light" style="height: 125px; width: auto;">
+        
+    </div>
+    <div class="row text-light">
+        <div class="col-3" style="min-height: 570px;">
+            <div style="margin-left: 25px; margin-right: 5px;">
+                <div style="margin-top: 65px; line-break: anywhere;">
+                            <div id="preview"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div style="margin-left: 25px; margin-right: 25px;">
+                <div style="margin-top: 65px; line-break: anywhere;">
+                    <form asp-action="Create" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input placeholder="İçerik Başlığı" asp-for="Baslik" class="form-control" />
+                <span asp-validation-for="Baslik" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input placeholder="İçeriğin Türü" asp-for="Tur" class="form-control" />
+                <span asp-validation-for="Tur" class="text-danger"></span>
+            </div>
+            <div class="form-group">                <input placeholder="İçeriğin IMDB Puanı" asp-for="IMDB" class="form-control" />
+                <span asp-validation-for="IMDB" class="text-danger"></span>
+            </div>
+            <div class="form-group">                <input placeholder="İçeriğin Açıklaması" asp-for="Aciklama" class="form-control" />
+                <span asp-validation-for="Aciklama" class="text-danger"></span>
+            </div>
+
+
+            <div class="custom-control custom-checkbox my-3">
+                <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+                <label class="custom-control-label" for="customCheck">İçerik Yayına Girsin</label>
+            </div>
+
+
+            <div class="custom-file">
+                <input asp-for="GorselDosyalari" id="file-input" class="custom-file-input" type="file" multiple/>
+                <label class="custom-file-label" for="file-input">Dosya Seç</label>
+                <span asp-validation-for="GorselDosyalari" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3" style="text-align: center;">
+                <input style="width: calc(70%);" type="submit" value="Oluştur" class="btn btn-primary" />
+            </div>
+        </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+            <div style="margin-left: 5px; margin-right: 3.2vh;">
+                <div style="margin-top: 65px; line-break: anywhere;">
+                    <p>bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script>
+function previewImages() {
+
+  var preview = document.querySelector('#preview');
+  
+  if (this.files) {
+    [].forEach.call(this.files, readAndPreview);
+  }
+
+  function readAndPreview(file) {
+
+    // Make sure `file.name` matches our extensions criteria
+    if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
+      return alert(file.name + " bir resim dosyası değil");
+    } // else...
+    
+    var reader = new FileReader();
+    
+    reader.addEventListener("load", function() {
+      var image = new Image();
+      image.height = 100;
+      image.title  = file.name;
+      image.src    = this.result;
+      image.style.marginRight="5px";
+      image.style.height="100px";
+      image.style.borderRadius="5px";
+      preview.appendChild(image);
+    });
+    
+    reader.readAsDataURL(file);
+    
+  }
+
+}
+document.querySelector('#file-input').addEventListener("change", previewImages);
+$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+</script>
+}

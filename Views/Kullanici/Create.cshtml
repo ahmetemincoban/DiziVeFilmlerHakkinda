@@ -1,0 +1,21 @@
+@model UserViewModel
+<div class="jumbotron mt-5" style="background-color: rgba(255, 255, 255, 0.2);">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4 text-light">
+            <form asp-action="Create">
+              <div class="form-group">
+                <label for="exampleInputEmail1">E-Posta Adresi</label>
+                <input asp-for="Eposta" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-posta giriniz">
+                <small id="emailHelp" class="form-text text-muted">Benzersiz bir mail adresi girdiğinizden emin olun!</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Şifre</label>
+                <input asp-for="Sifre" type="password" class="form-control" id="exampleInputPassword1" placeholder="Şifre">
+              </div>
+              <button type="submit" class="btn btn-primary">Kullanıcıyı Ekle</button>
+            </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
