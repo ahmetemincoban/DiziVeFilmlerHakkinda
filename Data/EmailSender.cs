@@ -15,7 +15,7 @@ namespace DiziveFilmHakkinda.Data
 
         smp.UseDefaultCredentials = false;
         #region 
-        smp.Credentials = new NetworkCredential("stajpostaahmetemin@gmail.com", "deneme123");
+        smp.Credentials = new NetworkCredential("MAİL ADRESİNİZİ YAZINIZ", "MAİL ŞİFRE");
         #endregion
         smp.EnableSsl = true;
         smp.Port = 587;
@@ -25,7 +25,7 @@ namespace DiziveFilmHakkinda.Data
 
         mail.IsBodyHtml = true;
         
-        mail.From = new MailAddress("stajpostaahmetemin@gmail.com","Yönetim",System.Text.Encoding.UTF8);
+        mail.From = new MailAddress("MAİL ADRESİNİZİ YAZINIZ","Yönetim",System.Text.Encoding.UTF8);
 
         mail.To.Add(email);
 
@@ -38,26 +38,6 @@ namespace DiziveFilmHakkinda.Data
 
         return Task.CompletedTask;
 
-
-
-        // MailMessage mail = new MailMessage(){
-        //     From = new MailAddress("stajpostaahmetemin@gmail.com", "Eposta Onay (Lütfen bu maili cevaplamayınız)", System.Text.Encoding.UTF8),
-        //     Subject = subject,
-        //     Body = htmlMessage,
-        //     IsBodyHtml = true,
-        // };
-        // mail.To.Add(email);       
-
-        // SmtpClient smp = new SmtpClient(){
-        //     Host = "smtp.gmail.com",
-        //     UseDefaultCredentials = false,
-        //     Credentials = new NetworkCredential("stajpostaahmetemin@gmail.com", "comolokkomese123*"),
-        //     Port = 465,
-        //     EnableSsl = false
-        // };
-        // smp.Send(mail);
-
-        // return Task.CompletedTask;
 
     }
 }}
